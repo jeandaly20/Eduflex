@@ -151,7 +151,15 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # Storage estándar de Django (sin manifest ni pre-compresión de
+        # WhiteNoise): las variantes de WhiteNoise post-procesan los
+        # archivos al hacer collectstatic y eso chocó con dos problemas
+        # distintos en este proyecto (un bug real de orden de Django con
+        # los íconos del propio admin, y una condición de carrera del
+        # compresor con archivos grandes). WhiteNoiseMiddleware sigue
+        # sirviendo estos archivos igual de bien en producción, solo sin
+        # la compresión gzip/brotli pre-calculada.
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
