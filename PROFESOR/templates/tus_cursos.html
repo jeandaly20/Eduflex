@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Eduflex - Cursos</title>
+  <link rel="stylesheet" href="{% static 'css/tus_cursos.css' %}">
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="{% static 'img/logo.png' %}" alt="Eduflex Logo">
+      <a class="btn-home" href="{% url 'profesor:dashboardTeacher' %}">Home</a>
+    </div>
+
+    <a class="btn-logout" href="{% url 'accounts:logout' %}">Cerrar sesión</a>
+  </header>
+
+
+
+  <main>
+
+    <h2>Cursos</h2>
+
+    <a class="btn-home" href="{% url 'profesor:crear_curso' %}">+ Crear curso</a>
+
+    <div class="curso-container">
+      {% for curso in cursos %}
+      <a class="curso-card" href="{% url 'profesor:curso' curso.id %}">
+            <strong></strong>
+            <span>{{ curso.nombre_curso }}</span>
+            <span>{{ curso.mostrar_seccion }}</span>
+            <span>{{ curso.periodo }}</span>
+
+      </a>
+      {% endfor %}
+    </div>
+
+  </main>
+
+</body>
+</html>

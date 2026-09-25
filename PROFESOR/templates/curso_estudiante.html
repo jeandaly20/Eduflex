@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Estudiantes</title>
+    <link rel="stylesheet" href="{% static 'css/estudiantes.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="{% static 'img/logo.png' %}" alt="Eduflex">
+        <a href="{% url 'profesor:verEstadisticasCurso' curso.id %}" class="btn">Estadísticas generales curso</a>
+        <a href="{% url 'profesor:agregar_estudiante' curso.id %}" class="btn">+ Agregar estudiante</a>
+    </div>
+</header>
+
+<div class="regresar">
+    <a class="boton-recuperar" href="{% url 'profesor:tuscursos'%}"> ← Regresar</a>
+</div>
+
+
+<form method="get">
+    <div class="filtros">
+        <input type="text" id="filtro-nombre" name="nombre" value="{{ nombre }}" placeholder="Buscar por nombre...">
+        <select id="filtro-genero" name="genero">
+            <option value="" {% if genero == "" %}selected{% endif %}>Todos los géneros</option>
+            <option value="M" {% if genero == "M" %}selected{% endif %}>Masculino</option>
+            <option value="F" {% if genero == "F" %}selected{% endif %}>Femenino</option>
+        </select>
+        <button type="submit">Filtrar</button>
+    </div>
+</form>
+
+
+
+<div class="container">
+    <h1>Estudiantes del Curso</h1>
+
+    <ul class="lista-estudiantes">
+        {% for niño in niños %}
+            <li class="item-estudiante"
+                data-nombre="{{ niño.nombres }} {{ niño.apellidos }}"
+                data-genero="{{ niño.genero }}">
+                <a href="{% url 'profesor:estudiante' curso.id niño.id %}">
+                    {% if niño.foto_perfil %}
+                        <img src="{{ niño.get_image }}" class="imagen-niño">
+                    {% endif %}
+                    <span class="nombre">📘 {{ niño.nombres }} {{ niño.apellidos }}</span>
+                    <span class="ver-mas">Ver detalle ➜</span>
+                </a>
+            </li>
+        {% empty %}
+            <li class="sin-estudiantes">No hay estudiantes registrados.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Modal para imagen -->
+<div id="modal-imagen" class="modal">
+    <span class="cerrar" id="cerrar-modal">&times;</span>
+    <img class="modal-contenido" id="img-modal">
+</div>
+
+
+<script>
+document.querySelectorAll('.imagen-niño').forEach(img => {
+    img.style.cursor = "pointer";
+    img.addEventListener('click', function(event) {
+        event.preventDefault(); // Evita navegación si la imagen está dentro de un enlace
+        document.getElementById('modal-imagen').style.display = "block";
+        document.getElementById('img-modal').src = this.src;
+    });
+});
+
+document.getElementById('cerrar-modal').onclick = function() {
+    document.getElementById('modal-imagen').style.display = "none";
+};
+
+document.getElementById('modal-imagen').onclick = function(event) {
+    // Solo cierra si el clic es fuera de la imagen modal y fuera de la "X"
+    if (event.target === this) {
+        this.style.display = "none";
+    }
+};
+</script>
+
+
+</body>
+</html>

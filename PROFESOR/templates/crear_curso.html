@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Curso - Eduflex</title>
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+  <div class="logo">
+    <img src="{% static 'img/logo.png' %}" alt="Logo Eduflex">
+  </div>
+
+  <form method="post" class="container">
+    {% csrf_token %}
+
+    <div class="regresar">
+      <a href="{% url 'profesor:tuscursos' %}" class="boton-recuperar">←</a>
+    </div>
+
+    <h2>CREAR CURSO</h2>
+
+    <div class="field">
+      {{ form.nombre_curso.label_tag }}
+      {{ form.nombre_curso }}
+      {{ form.nombre_curso.errors }}
+    </div>
+
+    <div class="field">
+      {{ form.seccion.label_tag }}
+      {{ form.seccion }}
+      {{ form.seccion.errors }}
+    </div>
+
+    <div class="field">
+      {{ form.periodo.label_tag }}
+      {{ form.periodo }}
+      {{ form.periodo.errors }}
+    </div>
+
+    <div class="field">
+      {{ form.fecha_inicio.label_tag }}
+      {{ form.fecha_inicio }}
+      {{ form.fecha_inicio.errors }}
+    </div>
+
+    <div class="field">
+      {{ form.fecha_final.label_tag }}
+      {{ form.fecha_final }}
+      {{ form.fecha_final.errors }}
+    </div>
+
+    <div class="field">
+      {{ form.descripcion.label_tag }}
+      {{ form.descripcion }}
+      {{ form.descripcion.errors }}
+    </div>
+
+    <div class="full-width">
+      <button type="submit" class="btn">Crear curso</button>
+    </div>
+  </form>
+</body>
+</html>

@@ -1,0 +1,154 @@
+/* Reinicio y estilos base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif; /* Fuente moderna y amigable */
+}
+
+/* Fondo con gradiente radial */
+html, body {
+  height: 100%;
+  background: radial-gradient(circle at center, #E8F5E9 0%, #BBDEFB 100%); /* Consistente con signup */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
+/* Contenedor del logo */
+.logo-container {
+  position: fixed; /* Fijo para mantenerse en la esquina */
+  top: 20px;
+  left: 20px;
+  z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+
+/* Logo */
+.logo {
+  width: 140px; /* Consistente con otras páginas */
+  height: auto;
+  display: block;
+  will-change: transform; /* Optimiza el renderizado */
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+/* Contenedor centrado */
+.recuperacion-container {
+  background: #FFFFFF;
+  width: 700px; /* Igual al signup */
+  max-width: 90%; /* Responsivo */
+  padding: 50px 40px;
+  border-radius: 25px; /* Bordes redondeados */
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15); /* Sombra suave */
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.5s ease-in-out; /* Animación de entrada */
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Flecha de regreso */
+.back-arrow {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  font-size: 28px; /* Más grande para visibilidad */
+  color: #333333;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.back-arrow:hover {
+  background-color: #F5F5F5; /* Fondo gris claro en hover */
+  color: #4CAF50; /* Verde consistente */
+}
+
+/* Título */
+h2 {
+  font-size: 36px; /* Más grande para destacar, igual al signup */
+  color: #333333;
+  font-weight: 600;
+  margin: 50px auto 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+/* Párrafo */
+p {
+  font-size: 16px; /* Más grande para legibilidad */
+  color: #555555;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* Campo de correo */
+input[type="email"],
+input[type="text"],
+input {
+  width: 100%;
+  padding: 14px 18px; /* Más padding */
+  margin-bottom: 25px;
+  font-size: 18px; /* Fuente más grande */
+  border: 1px solid #DDDDDD;
+  border-radius: 12px;
+  background: #F5F5F5; /* Fondo gris claro */
+  outline: none;
+  color: #333333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+  border-color: #4CAF50; /* Verde principal */
+  box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+}
+
+/* Botón de enviar */
+button.btn {
+  width: 100%;
+  background-color: #4CAF50; /* Verde principal */
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 14px;
+  border: none;
+  border-radius: 25px; /* Más redondeado */
+  font-size: 18px; /* Más grande */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button.btn:hover {
+  background-color: #388E3C; /* Verde más oscuro */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* Mensajes */
+ul.messages {
+  list-style: none;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+ul.messages li {
+  background: #FFF3F3; /* Fondo rojo suave */
+  color: #EF5350; /* Rojo para mensajes */
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px; /* Más grande */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+ul.messages li.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}

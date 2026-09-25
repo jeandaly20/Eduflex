@@ -1,0 +1,267 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Niño</title>
+  <link rel="stylesheet" href="{% static 'css/dashboardKid.css' %}">
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="logo-btn" href="{% url 'niño:dashboardKid' %}">
+      <img src="{% static 'img/logo.png' %}" alt="Logo">
+    </a>
+    <div class="brand">Edu<span>flex</span></div>
+    <button class="settings-btn" onclick="openModal()" aria-label="Configuración">⚙️</button>
+  </header>
+
+
+  <div id="configModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="modal-close-btn" onclick="closeModal(event)">✖</button>
+      <h2>Configuración</h2>
+      <div class="config-item">
+        <label>Sonido:</label>
+        <button onclick="toggleSonido()" id="btnSonido" class="config-btn">Activado</button>
+      </div>
+      <div class="config-item">
+        <label>Texto:</label>
+        <button onclick="toggleTexto()" id="btnTexto" class="config-btn">Normal</button>
+      </div>
+      <div class="config-item">
+        <label>Ayuda:</label>
+        <button onclick="mostrarAyuda()" class="config-btn">Ver ayuda</button>
+      </div>
+      <a href="{% url 'accounts:logout' %}" class="config-btn config-btn-danger">Cerrar sesión</a>
+    </div>
+  </div>
+
+
+  <div id="profileViewModal" class="modal-overlay" onclick="closeProfileViewModal(event)">
+    <div class="modal-content perfil-modal-content">
+      <button class="modal-close-btn" onclick="closeProfileViewModal(event)">✖</button>
+      <h2 class="perfil-titulo">Mi Perfil</h2>
+
+      <div class="perfil-row">
+        <div class="img-preview">
+          {% if niño.foto_perfil %}
+            <img src="{{ niño.foto_perfil.url }}" alt="Foto actual" class="perfil-img-preview">
+          {% else %}
+            <img src="{% static 'img/Niño.png' %}" alt="Imagen por defecto" class="perfil-img-preview">
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="perfil-row">
+        <label class="perfil-label">Nombre:</label>
+        <div class="perfil-input">{{ niño.nombres }}</div>
+      </div>
+      <div class="perfil-row">
+        <label class="perfil-label">Apellido:</label>
+        <div class="perfil-input">{{ niño.apellidos }}</div>
+      </div>
+      <div class="perfil-row">
+        <label class="perfil-label">Correo:</label>
+        <div class="perfil-input">{{ niño.email }}</div>
+      </div>
+      <div class="perfil-row">
+        <label class="perfil-label">Usuario:</label>
+        <div class="perfil-input">{{ niño.usuario }}</div>
+      </div>
+      <div class="perfil-row">
+        <label class="perfil-label"> Nacimiento:</label>
+        <div class="perfil-input">{{ niño.fecha_nac }}</div>
+      </div>
+
+      <div class="perfil-row guardar-row">
+        <button class="config-btn" onclick="openEditProfileModal()">Editar perfil</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="editProfileModal" class="modal-overlay" onclick="closeEditProfileModal(event)">
+    <div class="modal-content perfil-modal-content">
+      <button class="modal-close-btn" onclick="closeEditProfileModal(event)">✖</button>
+      <h2 class="perfil-titulo">Editar Perfil</h2>
+
+      <form id="editarPerfilForm" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+
+        <div class="perfil-row">
+          <div class="img-preview">
+            {% if niño.foto_perfil %}
+              <img src="{{ niño.foto_perfil.url }}" alt="Foto actual" class="perfil-img-preview">
+            {% else %}
+              <img src="{% static 'img/Niño.png' %}" alt="Imagen por defecto" class="perfil-img-preview">
+            {% endif %}
+          </div>
+          <div class="btn-cambiar">
+            <label for="fotoEditInput" class="config-btn">Cambiar Foto</label>
+            <input type="file" id="fotoEditInput" name="foto" accept="image/*" style="display:none">
+          </div>
+        </div>
+
+        <div class="perfil-row">
+          <label class="perfil-label">Nombres:</label>
+          <input type="text" name="nombres" value="{{ niño.nombres }}" class="perfil-input" required>
+        </div>
+        <div class="perfil-row">
+          <label class="perfil-label">Apellidos:</label>
+          <input type="text" name="apellidos" value="{{ niño.apellidos }}" class="perfil-input" required>
+        </div>
+        <div class="perfil-row">
+          <label class="perfil-label">email:</label>
+          <input type="email" name="email" value="{{ niño.email }}" class="perfil-input" required>
+        </div>
+        <div class="perfil-row">
+          <label class="perfil-label">Usuario:</label>
+          <input type="text" name="usuario" value="{{ niño.usuario }}" class="perfil-input" required>
+        </div>
+
+        <div class="perfil-row guardar-row">
+          <button type="submit" class="config-btn">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div id="recordModal" class="modal-overlay" onclick="closeRecordModal(event)">
+    <div class="modal-content record-modal">
+      <button class="modal-close-btn" onclick="closeRecordModal(event)">✖</button>
+      <h2>🏆 Mejores Records</h2>
+      <div class="record-grid">
+        {% for record in records %}
+          <div class="record-box">
+            <h3>Nivel {{ record.nivel }}</h3>
+            <p><strong>🎯 Puntaje:</strong> {{ record.puntaje }}</p>
+            <p><strong>⏱️ Tiempo:</strong> {{ record.tiempo }}</p>
+          </div>
+        {% empty %}
+          <p>No hay récords aún con puntaje mayor a 70.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+  <div id="avatarModal" class="modal-overlay" onclick="closeAvatarModal(event)">
+    <div class="modal-content avatar-modal-content">
+      <button class="modal-close-btn" onclick="closeAvatarModal(event)">✖</button>
+      <h2 class="perfil-titulo">🎨 Inventario de Avatar</h2>
+      <p class="avatar-puntos">✨ {{ avatar_puntos }} puntos ganados jugando</p>
+
+      <div class="avatar-inventario">
+        <div class="avatar-tabs">
+          <button type="button" class="avatar-tab active" data-categoria="camisa" onclick="mostrarCategoriaAvatar('camisa')">👕 Camisa</button>
+          <button type="button" class="avatar-tab" data-categoria="pantalon" onclick="mostrarCategoriaAvatar('pantalon')">👖 Pantalón</button>
+          <button type="button" class="avatar-tab" data-categoria="zapatos" onclick="mostrarCategoriaAvatar('zapatos')">👟 Zapatos</button>
+          <button type="button" class="avatar-tab" data-categoria="accesorio" onclick="mostrarCategoriaAvatar('accesorio')">🎩 Extra</button>
+        </div>
+
+        {% for categoria, items in avatar_catalogo.items %}
+          <div class="avatar-grid" data-categoria-grid="{{ categoria }}" {% if not forloop.first %}style="display:none;"{% endif %}>
+            {% for item in items %}
+              <button type="button"
+                      class="avatar-item {% if item.equipado %}equipado{% endif %} {% if not item.desbloqueado %}bloqueado{% endif %}"
+                      {% if item.desbloqueado %}
+                        onclick="equiparAvatar('{{ categoria }}', '{{ item.id }}', this)"
+                      {% else %}
+                        disabled
+                      {% endif %}
+                      title="{{ item.nombre }}">
+                <span class="avatar-item-muestra" style="background:{{ item.color|default:'#e0e0e0' }};"></span>
+                <span class="avatar-item-nombre">{{ item.nombre }}</span>
+                {% if item.equipado %}
+                  <span class="avatar-item-check">✔</span>
+                {% elif not item.desbloqueado %}
+                  <span class="avatar-item-candado">🔒 {{ item.puntos }} pts</span>
+                {% endif %}
+              </button>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="dashboard">
+    <aside class="sidebar">
+      <h3>Panel</h3>
+      <div class="Juegos">
+        <a href="{% url 'niño:juegos_recomendados' %}" class="btnjugar">
+          <button>
+            <img src="{% static 'img/Juegos.png' %}" alt="Juegos">
+            Juegos
+          </button>
+        </a>
+        <button onclick="openProfileViewModal()">
+          <img src="{% static 'img/IconoPerfil.png' %}" alt="Perfil">
+          Perfil
+        </button>
+        <button onclick="openAvatarModal()">
+          <span class="sidebar-emoji" aria-hidden="true">🧑‍🎨</span>
+          Avatar
+        </button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="perfil-card">
+        {% if niño.foto_perfil %}
+          <img src="{{ niño.foto_perfil.url }}" alt="{{ niño.nombre_completo }}" class="niño-foto">
+        {% else %}
+          <img src="{% static 'img/Niño.png' %}" alt="Imagen por defecto" class="niño-foto">
+        {% endif %}
+        <div class="perfil-card-texto">
+          <span class="saludo">¡Hola de nuevo!</span>
+          <span class="nombre-nino">{{ niño.usuario }}</span>
+        </div>
+      </div>
+
+      <div class="paneles-fila">
+        <div class="progreso-wrapper">
+          <h2 class="titulo-progreso">Acceso Rápido</h2>
+          <div class="progreso-contenido">
+            <button class="record-btn" onclick="openRecordModal()" title="Ver mis récords">
+              <img src="{% static 'img/record.png' %}" alt="Record" class="record-icon">
+            </button>
+            <div class="barra-container">
+              <p class="label-progreso">Progreso</p>
+              <div class="barra-externa">
+                <div class="barra-interna" style="width: {{ progreso_porcentaje }}%;"></div>
+              </div>
+              <p class="texto-progreso">{{ niveles_completados }} de {{ total_niveles }} niveles completados</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="avatar-card">
+          <div class="avatar-card-preview">
+            {% include "_avatar_svg.html" %}
+          </div>
+          <div class="avatar-card-info">
+            <h2 class="titulo-progreso">Mi Avatar</h2>
+            <p class="avatar-puntos">✨ {{ avatar_puntos }} pts</p>
+            <button class="config-btn" onclick="openAvatarModal()">🎨 Personalizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <img src="{% static 'img/perrocorriendo.gif' %}" alt="Perro corriendo" class="perro">
+
+  <audio id="musicaDashboard" autoplay loop>
+    <source src="{% static 'musica/Allegro in B flat Major (K.3) - Mozart (Free Sheets).mp3' %}" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script src="{% static 'JS/dashboardKids.js' %}"></script>
+
+</body>
+</html>

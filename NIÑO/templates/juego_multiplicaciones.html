@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vamos a multiplicar</title>
+    <link rel="stylesheet" href="{% static 'CSS/discalculiaStyles.css' %}">
+    <script>
+        document.cookie = "csrftoken={{ csrf_token }}";
+    </script>
+</head>
+<body>
+    <div id="mensaje-flotante"></div>
+    <!-- Botón de Pausa -->
+    <button id="pausaBtn" class="button">⏸</button>
+
+    <!-- Overlay y Modal de Pausa -->
+    <div id="modalOverlay" class="modal-overlay"></div>
+    <div class="container" id="modalPausa">
+        <div class="input-field">
+            <input type="button" value="Continuar" class="button-input" onclick="togglePausa()">
+            <a class="button-input" href="{% url 'niño:cerrar_juego' %}">Salir</a>
+
+        </div>
+    </div>
+
+    <!-- Overlay y Modal Final (REUTILIZANDO diseño de pausa) -->
+    <div id="modalFinalOverlay" class="modal-overlay"></div>
+    <div class="container" id="modalFinal" style="display: none;"></div>
+
+    <!-- Fondo visual -->
+    <div id="burbujas-container"></div>
+
+    <!-- Contenedor principal del juego -->
+    <div id="contenedor-juego">
+        <h1>Vamos a Multiplicar</h1>
+        <div id="contador-pregunta">Pregunta 1 de 15</div>
+        <p id="pregunta"></p>
+
+        <div id="opciones"></div>
+        <p id="mensaje-resultado"></p>
+    </div>
+
+    <!-- Imágenes decorativas -->
+    <img id="tiburon" src="{% static 'img/tiburon3.png' %}" alt="Tiburón">
+    <img id="buzo" src="{% static 'img/buzo1.png' %}" alt="Buzo">
+
+
+    <script>
+        const buzo2URL = "{% static 'img/buzo2.png' %}";
+        const buzo1URL = "{% static 'img/buzo1.png' %}";
+        const frameUrl = "{% url 'niño:recibir_frame' %}";
+    </script>
+
+    <!-- Música de fondo -->
+    <audio id="musicaJuegos" loop autoplay>
+        <source src="{% static 'musica/nocturne in f.mp3' %}" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
+    <!-- Script principal del juego -->
+    <script src="{% static 'JS/deteccion_camara.js' %}"></script>
+    <script src="{% static 'JS/juego_discalculia.js' %}"></script>
+</body>
+</html>

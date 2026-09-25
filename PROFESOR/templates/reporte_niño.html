@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reportes del Estudiante - Eduflex</title>
+  <link rel="stylesheet" href="{% static 'css/report_total.css' %}">
+</head>
+<body>
+
+<header>
+  <img src="{% static 'img/logo.png' %}" alt="Logo" class="logo">
+  <a href="{% url 'profesor:dashboardTeacher' %}" class="btn-nav">Home</a>
+  <a href="{% url 'accounts:logout' %}" class="btn-cerrar">Cerrar sesión</a>
+</header>
+
+<div class="regresar">
+   <a href="{% url 'profesor:curso' curso.id %}" class="boton-recuperar">← Regresar</a>
+</div>
+
+
+<main>
+
+  <section class="estudiante ">
+    <div class="contenido-reportes">
+        <h4 >Reportes:</h4>
+        <a href="{% url 'profesor:verEstadisticasNiño' nino.id curso.id %}" class="btn">Estadistiocas generales niño</a>
+
+        <div class="reportes">
+          {% for reporte in reportes %}
+          <a class="card reporte" href="{% url 'profesor:verReportStudent' reporte.id curso.id %}">
+            <strong></strong>
+             <span>{{ reporte.titulo }}</span>
+            <span>Duración:{{ reporte.duracion_evaluacion }}</span>
+            <span>Fecha:{{ reporte.fecha }}</span>
+          </a>
+          {% endfor %}
+        </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

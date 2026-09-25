@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Estudiante - Eduflex</title>
+    <link rel="stylesheet" href="{% static 'css/estudiantes.css' %}">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="{% static 'img/logo.png' %}" alt="Eduflex">
+        <a href="{% url 'profesor:curso' curso.id %}" class="btn">Ver curso</a>
+    </div>
+</header>
+
+<div class="regresar">
+    <a class="boton-recuperar" href="{% url 'profesor:curso' curso.id %}"> ← Regresar</a>
+</div>
+
+<div class="container">
+    <h1>Agregar estudiante a {{ curso.nombre_curso }}</h1>
+
+    <form method="get" class="filtros">
+        <input type="text" name="q" value="{{ busqueda }}" placeholder="Buscar por nombre o usuario...">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <ul class="lista-estudiantes">
+        {% for niño in resultados %}
+            <li class="item-estudiante">
+                <span class="nombre">📘 {{ niño.nombres }} {{ niño.apellidos }} ({{ niño.usuario }})</span>
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="niño_id" value="{{ niño.id }}">
+                    <input type="hidden" name="q" value="{{ busqueda }}">
+                    <button type="submit" class="btn">Agregar</button>
+                </form>
+            </li>
+        {% empty %}
+            {% if busqueda %}
+                <li class="sin-estudiantes">No se encontraron niños con "{{ busqueda }}".</li>
+            {% else %}
+                <li class="sin-estudiantes">Busca por nombre o usuario para agregar estudiantes.</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>

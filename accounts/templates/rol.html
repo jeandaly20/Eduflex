@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Elige tu rol</title>
+  <link rel="stylesheet" href="{% static 'CSS/rol.css' %}">
+</head>
+<body>
+
+  <div class="card">
+    <div class="regresar">
+        <a href="{% url 'accounts:login' %}" class="boton-recuperar">←</a>
+    </div>
+    <h2>Elige tu rol</h2>
+    <div class="roles">
+      <div class="role"  onclick="window.location.href='{% url 'accounts:signupkid' %}'">
+        <div>🧒</div>
+        <h3>NIÑO</h3>
+        <p>Juega, aprende y desbloquea premios mientras te diviertes.</p>
+      </div>
+      <div class="role" onclick="window.location.href='{% url 'accounts:signupprofesor' %}'">
+        <div>👩‍🏫</div>
+        <h3>PROFESOR</h3>
+        <p>Crea cursos, agrega estudiantes y revisa sus reportes de atención.</p>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

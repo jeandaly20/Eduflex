@@ -1,0 +1,104 @@
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #e6f7ff);
+  margin: 0;
+  padding: 0;
+  color: #2C3E50;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo img {
+  height: 55px;
+}
+
+.btn-home {
+  background-color: #A3E635;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #1f2937;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.btn-home:hover {
+  background-color: #8cc63f;
+}
+
+.btn-logout {
+  background-color: #F48FB1;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.btn-logout:hover {
+  background-color: #ec407a;
+}
+
+main {
+  padding: 40px;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #4A90E2;
+}
+
+.curso-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.curso-card {
+  width: 230px;
+  height: 230px;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  color: #2C3E50;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.curso-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.curso-card span {
+  margin: 6px 0;
+  font-size: 1.05rem;
+}

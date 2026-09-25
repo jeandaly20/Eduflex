@@ -1,0 +1,23 @@
+# Ignorar entorno virtual
+venv/
+ent/
+env/
+.venv/
+.idea
+.env
+# Otros comunes que podrías querer ignorar:
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+
+NIÑO/migrations/__pycache__/
+PROFESOR/migrations/__pycache__/
+
+# Herramientas locales / editor
+.claude/
+.vscode/
+
+# Estáticos recolectados en build (Render corre collectstatic)
+staticfiles/

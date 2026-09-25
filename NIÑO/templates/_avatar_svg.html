@@ -1,0 +1,43 @@
+{% load static %}
+<svg id="avatarSvg" viewBox="0 0 200 260" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="100" cy="238" rx="55" ry="10" fill="#000" opacity="0.08"></ellipse>
+
+  <!-- piernas -->
+  <rect x="63" y="165" width="30" height="55" rx="14" fill="{{ avatar_colores.pantalon }}" stroke="#2b2b2b" stroke-width="4" data-parte="pantalon"></rect>
+  <rect x="107" y="165" width="30" height="55" rx="14" fill="{{ avatar_colores.pantalon }}" stroke="#2b2b2b" stroke-width="4" data-parte="pantalon"></rect>
+
+  <!-- zapatos -->
+  <ellipse cx="78" cy="222" rx="22" ry="13" fill="{{ avatar_colores.zapatos }}" stroke="#2b2b2b" stroke-width="4" data-parte="zapatos"></ellipse>
+  <ellipse cx="122" cy="222" rx="22" ry="13" fill="{{ avatar_colores.zapatos }}" stroke="#2b2b2b" stroke-width="4" data-parte="zapatos"></ellipse>
+
+  <!-- brazos -->
+  <rect x="34" y="110" width="24" height="60" rx="12" fill="{{ avatar_colores.camisa }}" stroke="#2b2b2b" stroke-width="4" data-parte="camisa"></rect>
+  <rect x="142" y="110" width="24" height="60" rx="12" fill="{{ avatar_colores.camisa }}" stroke="#2b2b2b" stroke-width="4" data-parte="camisa"></rect>
+
+  <!-- torso -->
+  <rect x="52" y="98" width="96" height="80" rx="30" fill="{{ avatar_colores.camisa }}" stroke="#2b2b2b" stroke-width="4" data-parte="camisa"></rect>
+
+  <!-- cabeza -->
+  <circle cx="100" cy="58" r="50" fill="#fdf6e9" stroke="#2b2b2b" stroke-width="4"></circle>
+  <ellipse cx="82" cy="58" rx="7" ry="9" fill="#2b2b2b"></ellipse>
+  <ellipse cx="118" cy="58" rx="7" ry="9" fill="#2b2b2b"></ellipse>
+  <path d="M 84 80 Q 100 90 116 80" stroke="#2b2b2b" stroke-width="4" fill="none" stroke-linecap="round"></path>
+
+  <!-- accesorio -->
+  <g data-parte="accesorio">
+    {% if niño.avatar_accesorio == "gorra" %}
+      <path d="M 50 40 Q 100 -5 150 40 L 150 25 Q 100 -10 50 25 Z" fill="{{ avatar_colores.accesorio }}" stroke="#2b2b2b" stroke-width="4"></path>
+      <ellipse cx="140" cy="34" rx="22" ry="8" fill="{{ avatar_colores.accesorio }}" stroke="#2b2b2b" stroke-width="4"></ellipse>
+    {% elif niño.avatar_accesorio == "lentes" %}
+      <circle cx="82" cy="58" r="15" fill="none" stroke="{{ avatar_colores.accesorio }}" stroke-width="5"></circle>
+      <circle cx="118" cy="58" r="15" fill="none" stroke="{{ avatar_colores.accesorio }}" stroke-width="5"></circle>
+      <line x1="97" y1="58" x2="103" y2="58" stroke="{{ avatar_colores.accesorio }}" stroke-width="5"></line>
+    {% elif niño.avatar_accesorio == "moño" %}
+      <path d="M 100 12 L 78 0 L 78 24 Z" fill="{{ avatar_colores.accesorio }}" stroke="#2b2b2b" stroke-width="3"></path>
+      <path d="M 100 12 L 122 0 L 122 24 Z" fill="{{ avatar_colores.accesorio }}" stroke="#2b2b2b" stroke-width="3"></path>
+      <circle cx="100" cy="12" r="7" fill="{{ avatar_colores.accesorio }}" stroke="#2b2b2b" stroke-width="3"></circle>
+    {% elif niño.avatar_accesorio == "corona" %}
+      <path d="M 62 26 L 72 2 L 88 20 L 100 -4 L 112 20 L 128 2 L 138 26 Z" fill="{{ avatar_colores.accesorio }}" stroke="#2b2b2b" stroke-width="4" stroke-linejoin="round"></path>
+    {% endif %}
+  </g>
+</svg>

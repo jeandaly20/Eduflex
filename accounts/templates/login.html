@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iniciar Sesión - Eduflex</title>
+  <link rel="stylesheet" href="{% static 'CSS/login.css' %}" />
+  <script src="{% static 'js/login.js' %}"></script>
+</head>
+<body>
+
+  <div class="logo">
+    <img src="{% static 'img/logo.png' %}" alt="Logo Eduflex">
+  </div>
+
+  <div class="container">
+    <div class="regresar">
+      <a href="{% url 'accounts:home' %}" class="boton-recuperar">←</a>
+    </div>
+
+    <h2>INICIAR SESIÓN</h2>
+
+
+    <div class="role-buttons">
+      <button type="button" onclick="mostrarFormulario('nino')">Niño</button>
+      <button type="button" onclick="mostrarFormulario('profesor')">Profesor</button>
+    </div>
+
+
+    <form id="form-nino" class="form-role active" method="post">
+      {% csrf_token %}
+         {% if messages %}
+           <ul class="messages errorlist">
+             {% for message in messages %}
+               <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+             {% endfor %}
+           </ul>
+        {% endif %}
+      <input type="text" id="usuario_nino" name="usuario_nino" placeholder="Usuario del niño" required />
+      <input type="password" id="clave_nino" name="clave_nino" placeholder="Contraseña" required />
+
+      <div class="crear-cuenta">
+        <a href="{% url 'accounts:rol' %}" class="boton-crear">Crear cuenta</a>
+        <button type="submit" class="btn-ingresar">INGRESAR</button>
+      </div>
+
+      <div class="forgot-password">
+        <a href="{% url 'accounts:recover_password' 'niño' %}" class="boton-recuperar">¿Has olvidado tu contraseña?</a>
+      </div>
+    </form>
+    <form id="form-profesor" class="form-role" method="post">
+      {% csrf_token %}
+       {% if messages %}
+           <div class="messages errorlist">
+             {% for message in messages %}
+               <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+             {% endfor %}
+           </div>
+       {% endif %}
+      <input type="text" id="usuario_profesor" name="usuario_profesor" placeholder="Usuario del profesor" required />
+      <input type="password" id="clave_profesor" name="clave_profesor" placeholder="Contraseña" required />
+
+      <div class="crear-cuenta">
+        <a href="{% url 'accounts:rol' %}" class="boton-crear">Crear cuenta</a>
+        <button type="submit" class="btn-ingresar">INGRESAR</button>
+      </div>
+
+      <div class="forgot-password">
+        <a href="{% url 'accounts:recover_password' 'profesor' %}" class="boton-recuperar">¿Has olvidado tu contraseña?</a>
+      </div>
+    </form>
+  </div>
+
+<script>
+  setTimeout(() => {
+    document.querySelectorAll('.errorlist').forEach(el => {
+      el.classList.add('fade-out');
+      setTimeout(() => el.style.display = 'none', 600);
+    });
+  }, 3000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Juego de Cartas</title>
+  <link rel="stylesheet" href="{% static 'CSS/cartas.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    document.cookie = "csrftoken={{ csrf_token }}";
+  </script>
+</head>
+<body>
+  <!-- Botón de Pausa -->
+  <button id="pausaBtn" class="button"> | | </button>
+
+  <!-- Overlay y modal -->
+  <div id="modalOverlay" class="modal-overlay"></div>
+  <div class="container" id="modalPausa">
+    <div class="input-field">
+      <input type="button" value="Continuar" class="button-input" onclick="togglePausa()">
+      <a class="button-input" href="{% url 'niño:cerrar_juego' %}">Salir</a>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div id="stats" class="oculto"></div>
+
+
+  <!-- Contenedor del juego -->
+  <div id="wrapper">
+    <div id="game"></div>
+  </div>
+<audio id="musicaJuegos" loop autoplay>
+    <source src="{% static 'musica/Niccolo Paganini -  La campanella (mp3cut.net).mp3' %}" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  <script>
+    const frameUrl = "{% url 'niño:recibir_frame' %}";
+  </script>
+  <script src="{% static 'JS/deteccion_camara.js' %}"></script>
+  <script src="{% static 'JS/cartas.js' %}" defer></script>
+</body>
+</html>
