@@ -1,0 +1,16 @@
+venv/
+ent/
+env/
+.venv/
+.git/
+.gitignore
+.env
+.claude/
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+staticfiles/
+media/
+README.md
